@@ -10,4 +10,6 @@ cd build-gdb-$TARGET
 ../gdb-$GDB_VERSION/configure --target=$TARGET --prefix=$PREFIX
 make
 make install
+cd ..
+rm -rf build-gdb-$TARGET
 

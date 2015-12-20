@@ -10,4 +10,6 @@ cd build-binutils-$TARGET
 ../binutils-$BINUTILS_VERSION/configure --target=$TARGET --prefix=$PREFIX
 make
 make install
+cd ..
+rm -rf build-binutils-$TARGET
 
