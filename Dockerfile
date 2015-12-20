@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
 
 ENV BINUTILS_VERSION 2.25.1
 ENV GDB_VERSION 7.10
-ENV PREFIX /usr/local/bin/cross
+ENV PREFIX /usr/local/cross
 RUN mkdir -p $PREFIX
 
 WORKDIR /tmp
