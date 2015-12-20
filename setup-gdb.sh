@@ -7,8 +7,10 @@ TARGET=$1
 
 mkdir build-gdb-$TARGET
 cd build-gdb-$TARGET
-../gdb-$GDB_VERSION/configure --target=$TARGET --prefix=$PREFIX
-make
+../gdb-$GDB_VERSION/configure \
+  --target=$TARGET --prefix=$PREFIX \
+  --disable-nls
+make -j4
 make install
 cd ..
 rm -rf build-gdb-$TARGET
