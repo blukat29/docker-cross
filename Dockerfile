@@ -50,7 +50,7 @@ RUN sh setup-gdb.sh frv-elf
 RUN sh setup-gdb.sh h8300-elf
 RUN sh setup-gdb.sh m32r-elf
 RUN sh setup-gdb.sh m6811-elf
-RUN sh setup-gdb.sh mcore-elf
+#RUN sh setup-gdb.sh mcore-elf
 RUN sh setup-gdb.sh mips64-elf
 RUN sh setup-gdb.sh mips16-elf
 RUN sh setup-gdb.sh mips-elf
@@ -58,6 +58,6 @@ RUN sh setup-gdb.sh mn10300-elf
 RUN sh setup-gdb.sh powerpc-elf
 RUN sh setup-gdb.sh sh64-elf
 RUN sh setup-gdb.sh sh-elf
-RUN sh setup-gdb.sh sparc-elf
+#RUN sh setup-gdb.sh sparc-elf
 RUN sh setup-gdb.sh v850-elf
 

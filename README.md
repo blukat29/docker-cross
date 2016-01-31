@@ -29,14 +29,14 @@ Tools are located under `/usr/local/cross/bin`.
 - h8300-elf (Renesas H8/300)
 - m32r-elf (Renesas M32R)
 - m6811-elf (Freescale 68HC11)
-- mcore-elf (Freescale M-CORE)
+- mcore-elf (Freescale M-CORE): binutils only
 - mips64-elf (MIPS 64-bit)
 - mips-elf (MIPS 32-bit)
 - mips16-elf (MIPS 16-bit)
-- mn10300 (Panasonic M103)
+- mn10300-elf (Panasonic M103)
 - powerpc-elf (PowerPC 32-bit)
 - sh64-elf (Renesas SuperH 64-bit)
 - sh-elf (Renesas SuperH 32-bit)
-- sparc-elf (SPARC)
+- sparc-elf (SPARC): binutils only
 - v850-elf (NEC v850)
 
