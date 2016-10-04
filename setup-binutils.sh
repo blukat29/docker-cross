@@ -1,4 +1,4 @@
-#1/bin/sh
+#!/bin/sh
 
 # sh setup-binutils.sh target_name
 # needs $PREFIX, $BINUTILS_VERSION
