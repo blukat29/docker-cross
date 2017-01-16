@@ -9,7 +9,7 @@ Docker image containing Binutils + GDB + GDB-Simulator for various target archit
 
 ```
 docker pull blukat29/cross
-docker run -it blukat29/cross /bin/bash
+docker run -v $(pwd):/root/shared -it blukat29/cross
 ```
 
 Tools are located under `/usr/local/cross/bin`.
@@ -22,21 +22,34 @@ Tools are located under `/usr/local/cross/bin`.
 
 ## Supported Architectures
 
-- arm-elf (ARM 32-bit)
-- avr-elf (Amtel AVR 8-bit)
-- cris-elf (ETRAX CRIS)
-- frv-elf (Fujitsu FR-V)
-- h8300-elf (Renesas H8/300)
-- m32r-elf (Renesas M32R)
-- m6811-elf (Freescale 68HC11)
-- mcore-elf (Freescale M-CORE): binutils only
-- mips64-elf (MIPS 64-bit)
-- mips-elf (MIPS 32-bit)
-- mips16-elf (MIPS 16-bit)
-- mn10300-elf (Panasonic M103)
-- powerpc-elf (PowerPC 32-bit)
-- sh64-elf (Renesas SuperH 64-bit)
-- sh-elf (Renesas SuperH 32-bit)
-- sparc-elf (SPARC): binutils only
-- v850-elf (NEC v850)
-
+Architecture   | binutils   | gdb-sim     | Comment
+-------------- | ---------- | ----------- | -------
+aarch64        | apt        | unsupported | ARM 64-bit
+alpha          | apt        | unsupported | DEC Alpha
+arc            | apt        | unsupported | Argonaut RISC Core
+arm            | apt        | built       | ARM 32-bit (includes thumb mode)
+avr            | built      | built       | Atmel AVR 8-bit
+cris           | built      | built       | ETRAX CRIS
+fr30           | built      | unsupported | Fujitsu FR30
+frv            | built      | built       | Fujitsu FR-V
+hppa           | apt        | unsupported | Hewlett-Packard PA-RISC
+h8300          | built      | built       | Renesas H8/300
+i960           | built      | unsupported | Intel i960
+ia64           | built      | unsupported | Intel ia64
+m32r           | apt        | built       | Renesas M32R
+m6811          | built      | built       | Motorola 68HC11
+m68k           | apt        | unsupported | Motorola m68k
+mcore          | built      | built       | Freescale M-CORE
+mips           | apt        | built       | MIPS 32-bit
+mips16         | apt        | built       | MIPS 16-bit mode (MIPS16e)
+mips64         | apt        | built       | MIPS 64-bit
+mn10300        | built      | built       | Panasonic MN103
+powerpc        | apt        | built       | PowerPC 32-bit
+powerpc64      | apt        | unsupported | PowerPC 64-bit
+s390           | apt        | unsupported | IBM ESA/390
+sh             | apt        | built       | Renesas SuperH 32-bit
+sh64           | apt        | built       | Renesas SuperH 64-bit (sh5)
+sparc          | apt        | built       | SPARC
+v850           | built      | built       | NEC V850
+x86            | apt        | not needed  |
+x86\_64        | apt        | not needed  |
