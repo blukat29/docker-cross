@@ -21,4 +21,5 @@ build_subdir opcodes
 build_subdir libiberty
 build_subdir sim
 
+cp sim/mcore/run $PREFIX/bin/mcore-elf-run
 cd .. && rm -rf build

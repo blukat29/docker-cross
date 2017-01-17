@@ -7,7 +7,6 @@ RUN apt-get update && apt-get install -y \
   texinfo \
   curl \
   libncurses-dev \
-  binutils-multiarch \
   && rm -rf /var/lib/apt/lists/*
 
 # Download sources
@@ -29,11 +28,9 @@ RUN mkdir -p $PREFIX
 
 # Install binutils
 COPY scripts/binutils.sh scripts/binutils.sh
-RUN scripts/binutils.sh \
-    avr-elf,cris-elf,fr30-elf,frv-elf,h8300-elf,i960-elf,ia64-elf,\
-m6811-elf,mcore-elf,mn10300-elf,v850-elf
+RUN scripts/binutils.sh all
 
-# Install gdb-sim.
+# Install gdb-sim
 COPY scripts/gdb.sh scripts/gdb.sh
 RUN scripts/gdb.sh arm-elf
 RUN scripts/gdb.sh avr-elf
@@ -52,11 +49,16 @@ RUN scripts/gdb.sh sh64-elf
 RUN scripts/gdb.sh sparc-elf
 RUN scripts/gdb.sh v850-elf
 
-# For mcore-elf, make only gdb-sim because build breaks.
+# For mcore-elf, make only gdb-sim because full gdb build breaks.
 COPY scripts/mcore.sh scripts/mcore.sh
 RUN scripts/mcore.sh
 
+# Clean up
 RUN rm -rf binutils-src gdb-src
+RUN apt-get remove -y binutils
+RUN cp $PREFIX/bin/* /usr/bin/
+
+# Setup shared directory
 RUN mkdir /root/shared
 VOLUME /root/shared
 CMD cd /root/shared && /bin/bash

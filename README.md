@@ -1,7 +1,7 @@
 
 # docker-cross
 
-Docker image containing Binutils + GDB + GDB-Simulator for various target architectures.
+Docker image containing Binutils + GDB-Simulator for various target architectures.
 
 ## [DockerHub](https://hub.docker.com/r/blukat29/cross/)
 
@@ -12,44 +12,57 @@ docker pull blukat29/cross
 docker run -v $(pwd):/root/shared -it blukat29/cross
 ```
 
-Tools are located under `/usr/local/cross/bin`.
+Docker's `/root/shared` will be shared with Host's current directory.
+
+## Using the tools
+
+Tools are installed under `/usr/bin`.
+binutils are combined into one single binary. binutils will automatically recognize the architecture.
+If you need to explicitly specify the architecture, use `-M` flag.
 
 ```
-/usr/local/cross/bin/sparc-elf-readelf -h sparc.bin
-/usr/local/cross/bin/m32r-elf-objdump -d m32r.bin
-/usr/local/cross/bin/avr-elf-run avr.bin
+readelf -h sparc.bin
+objdump -M m32r -d m32r.bin
+```
+
+
+gdb-sims are compiled into separate programs for each architecture.
+
+```
+avr-elf-run avr.bin
+sh-elf-run sh.bin
 ```
 
 ## Supported Architectures
 
 Architecture   | binutils   | gdb-sim     | Comment
 -------------- | ---------- | ----------- | -------
-aarch64        | apt        | unsupported | ARM 64-bit
-alpha          | apt        | unsupported | DEC Alpha
-arc            | apt        | unsupported | Argonaut RISC Core
-arm            | apt        | built       | ARM 32-bit (includes thumb mode)
-avr            | built      | built       | Atmel AVR 8-bit
-cris           | built      | built       | ETRAX CRIS
-fr30           | built      | unsupported | Fujitsu FR30
-frv            | built      | built       | Fujitsu FR-V
-hppa           | apt        | unsupported | Hewlett-Packard PA-RISC
-h8300          | built      | built       | Renesas H8/300
-i960           | built      | unsupported | Intel i960
-ia64           | built      | unsupported | Intel ia64
-m32r           | apt        | built       | Renesas M32R
-m6811          | built      | built       | Motorola 68HC11
-m68k           | apt        | unsupported | Motorola m68k
-mcore          | built      | built       | Freescale M-CORE
-mips           | apt        | built       | MIPS 32-bit
-mips16         | apt        | built       | MIPS 16-bit mode (MIPS16e)
-mips64         | apt        | built       | MIPS 64-bit
-mn10300        | built      | built       | Panasonic MN103
-powerpc        | apt        | built       | PowerPC 32-bit
-powerpc64      | apt        | unsupported | PowerPC 64-bit
-s390           | apt        | unsupported | IBM ESA/390
-sh             | apt        | built       | Renesas SuperH 32-bit
-sh64           | apt        | built       | Renesas SuperH 64-bit (sh5)
-sparc          | apt        | built       | SPARC
-v850           | built      | built       | NEC V850
-x86            | apt        | not needed  |
-x86\_64        | apt        | not needed  |
+aarch64        | Y          |             | ARM 64-bit
+alpha          | Y          |             | DEC Alpha
+arc            | Y          |             | Argonaut RISC Core
+arm            | Y          | Y           | ARM 32-bit (includes thumb mode)
+avr            | Y          | Y           | Atmel AVR 8-bit
+cris           | Y          | Y           | ETRAX CRIS
+fr30           | Y          |             | Fujitsu FR30
+frv            | Y          | Y           | Fujitsu FR-V
+hppa           | Y          |             | Hewlett-Packard PA-RISC
+h8300          | Y          | Y           | Renesas H8/300
+i960           | Y          |             | Intel i960
+ia64           | Y          |             | Intel ia64
+m32r           | Y          | Y           | Renesas M32R
+m6811          | Y          | Y           | Motorola 68HC11
+m68k           | Y          |             | Motorola m68k
+mcore          | Y          | Y           | Freescale M-CORE
+mips           | Y          | Y           | MIPS 32-bit
+mips16         | Y          | Y           | MIPS 16-bit mode (MIPS16e)
+mips64         | Y          | Y           | MIPS 64-bit
+mn10300        | Y          | Y           | Panasonic MN103
+powerpc        | Y          | Y           | PowerPC 32-bit
+powerpc64      | Y          |             | PowerPC 64-bit
+s390           | Y          |             | IBM ESA/390
+sh             | Y          | Y           | Renesas SuperH 32-bit
+sh64           | Y          | Y           | Renesas SuperH 64-bit (sh5)
+sparc          | Y          | Y           | SPARC
+v850           | Y          | Y           | NEC V850
+x86            | Y          | not needed  |
+x86\_64        | Y          | not needed  |
