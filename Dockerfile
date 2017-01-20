@@ -6,8 +6,8 @@ RUN apt-get update && apt-get install -y \
   build-essential \
   texinfo \
   curl \
-  libncurses-dev \
-  && rm -rf /var/lib/apt/lists/*
+  libncurses-dev
+#  && rm -rf /var/lib/apt/lists/*
 
 # Download sources
 WORKDIR /opt
@@ -28,9 +28,36 @@ RUN mkdir -p $PREFIX
 
 # Install binutils
 COPY scripts/binutils.sh scripts/binutils.sh
-RUN scripts/binutils.sh all
+RUN apt-get install -y file
 
-# Install gdb-sim
+RUN scripts/binutils.sh aarch64-elf
+#RUN scripts/binutils.sh alpha-elf
+RUN scripts/binutils.sh arc-elf
+RUN scripts/binutils.sh arm-elf
+RUN scripts/binutils.sh avr-elf
+RUN scripts/binutils.sh cris-elf
+RUN scripts/binutils.sh fr30-elf
+RUN scripts/binutils.sh frv-elf
+RUN scripts/binutils.sh hppa-elf
+RUN scripts/binutils.sh h8300-elf
+RUN scripts/binutils.sh i960-elf
+RUN scripts/binutils.sh ia64-elf
+RUN scripts/binutils.sh m32r-elf
+RUN scripts/binutils.sh m6811-elf
+RUN scripts/binutils.sh m68k-elf
+RUN scripts/binutils.sh mcore-elf
+RUN scripts/binutils.sh mips-elf
+RUN scripts/binutils.sh mips16-elf
+RUN scripts/binutils.sh mips64-elf
+RUN scripts/binutils.sh mn10300-elf
+RUN scripts/binutils.sh powerpc-elf
+RUN scripts/binutils.sh powerpc64-elf
+RUN scripts/binutils.sh sh-elf
+RUN scripts/binutils.sh sh64-elf
+RUN scripts/binutils.sh sparc-elf
+RUN scripts/binutils.sh v850-elf
+
+## Install gdb-sim
 COPY scripts/gdb.sh scripts/gdb.sh
 RUN scripts/gdb.sh arm-elf
 RUN scripts/gdb.sh avr-elf
