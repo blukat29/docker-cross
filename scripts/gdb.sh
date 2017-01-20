@@ -1,16 +1,23 @@
 #!/bin/sh
 set -e
 
-target=$1
+target_list="$*"
 
-mkdir -p build && cd build
+setup() {
+    target_opt="--target=$target"
 
-../gdb-src/configure \
-    --target=$target \
-    --prefix=$PREFIX \
-    --disable-nls \
-    --enable-sim
-make $MAKEOPT
-make install
+    mkdir -p build && cd build
+    ../gdb-src/configure \
+        $target_opt \
+        --prefix=$PREFIX \
+        --disable-nls \
+        --enable-sim
+    make $MAKEOPT
+    make install
+    cd .. && rm -rf build
+}
 
-cd .. && rm -rf build
+for target in $target_list
+do
+    setup $target
+done

@@ -12,7 +12,12 @@ build_subdir () {
         --prefix=$PREFIX \
         --disable-nls
     # Fix sim build error
-    make $MAKEOPT || (mv mcore/version.c-tmp mcore/version.c && make $MAKEOPT)
+    if [ "$1" = "sim" ]; then
+        mkdir -p mcore
+        echo '#include "version.h"' >> mcore/version.c
+        echo 'const char version[] = "7.9.1";' >> mcore/version.c
+    fi
+    make $MAKEOPT
     cd ..
 }
 
@@ -21,5 +26,6 @@ build_subdir opcodes
 build_subdir libiberty
 build_subdir sim
 
+mkdir -p $PREFIX/bin
 cp sim/mcore/run $PREFIX/bin/mcore-elf-run
 cd .. && rm -rf build
