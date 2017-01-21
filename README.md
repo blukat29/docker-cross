@@ -16,21 +16,12 @@ Docker's `/root/shared` will be shared with Host's current directory.
 
 ## Using the tools
 
-Tools are installed under `/usr/bin`.
-binutils are combined into one single binary. binutils will automatically recognize the architecture.
-If you need to explicitly specify the architecture, use `-M` flag.
+Tools are installed under `/usr/local/cross/bin`, but it is in `$PATH`.
 
 ```
-readelf -h sparc.bin
-objdump -M m32r -d m32r.bin
-```
-
-
-gdb-sims are compiled into separate programs for each architecture.
-
-```
+sparc-elf-readelf -h sparc.bin
+m32r-elf-objdump -M m32r -d m32r.bin
 avr-elf-run avr.bin
-sh-elf-run sh.bin
 ```
 
 ## Supported Architectures
@@ -38,7 +29,6 @@ sh-elf-run sh.bin
 Architecture   | binutils   | gdb-sim     | Comment
 -------------- | ---------- | ----------- | -------
 aarch64        | Y          |             | ARM 64-bit
-alpha          |            |             | DEC Alpha
 arc            | Y          |             | Argonaut RISC Core
 arm            | Y          | Y           | ARM 32-bit (includes thumb mode)
 avr            | Y          | Y           | Atmel AVR 8-bit
@@ -59,7 +49,6 @@ mips64         | Y          | Y           | MIPS 64-bit
 mn10300        | Y          | Y           | Panasonic MN103
 powerpc        | Y          | Y           | PowerPC 32-bit
 powerpc64      | Y          |             | PowerPC 64-bit
-s390           |            |             | IBM ESA/390
 sh             | Y          | Y           | Renesas SuperH 32-bit
 sh64           | Y          | Y           | Renesas SuperH 64-bit (sh5)
 sparc          | Y          | Y           | SPARC

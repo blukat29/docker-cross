@@ -23,6 +23,7 @@ COPY scripts/ scripts/
 RUN set -ex \
     && deps=' \
         build-essential \
+        binutils \
         texinfo \
         libncurses-dev \
     ' \
@@ -55,6 +56,7 @@ RUN set -ex \
         sh64-elf      \
         sparc-elf     \
         v850-elf      \
+        x86_64-linux  \
     && scripts/gdb.sh \
         arm-elf       \
         avr-elf       \
@@ -76,6 +78,10 @@ RUN set -ex \
     && scripts/mcore.sh \
     && apt-get purge -y --auto-remove $deps \
     && rm -rf binutils-src gdb-src
+
+# Copy tools
+COPY tools/bashrc /root/.bashrc
+COPY tools/ $PREFIX/tools/
 
 # Setup shared directory
 VOLUME /opt

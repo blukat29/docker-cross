@@ -1,0 +1,13 @@
+[ -z "$PS1" ] && return
+
+PS1="\[\033[1;32m\]\u@\h\033[0m\]:"
+PS1+="\[\033[1;94m\]\w\[\033[0m\]\$ "
+
+export PATH="$PATH:/usr/local/cross/bin"
+export PATH="$PATH:/usr/local/cross/tools"
+
+alias ll='ls -alh'
+alias ls='ls -F --color=auto'
+alias cls='clear'
+alias md='mkdir'
+alias grep='grep --color=auto'
