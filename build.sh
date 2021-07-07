@@ -1,3 +1,3 @@
 #!/bin/sh
 
-docker build -t blukat29/cross:stretch .
+DOCKER_BUILDKIT=1 docker build -t blukat29/cross:buster .

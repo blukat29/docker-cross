@@ -1,24 +1,15 @@
 #!/bin/sh
-set -e
 
 target_list="$*"
 
 setup() {
-    if [ "$1" = "all" ]; then
-        target_opt="--enable-targets=$1"
-    elif [ `echo $1 | grep -c ","` -gt 0 ]; then
-        target_opt="--enable-targets=$1"
-    else
-        target_opt="--target=$target"
-    fi
-
     mkdir -p build && cd build
     ../binutils-src/configure \
-        $target_opt \
+        --target=$1 \
         --prefix=$PREFIX \
         --disable-nls \
         --disable-werror
-    make $MAKEOPT
+    make -j
     make install
     cd .. && rm -rf build
 }
