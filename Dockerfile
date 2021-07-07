@@ -1,6 +1,7 @@
-FROM debian:wheezy
+FROM debian:stretch
 
-RUN sed -i 's/deb.debian.org/ftp.kr.debian.org/g' /etc/apt/sources.list
+# Modify this to suit your needs.
+RUN sed -i 's/deb.debian.org/mirror.kakao.com/g' /etc/apt/sources.list
 
 # Utilities not necessarily requiz
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -18,7 +19,11 @@ ENV PREFIX "/usr/local/cross"
 RUN mkdir -p $PREFIX \
     && mkdir scripts/
 
-#COPY scripts/fetch.sh scripts/fetch.sh
+# You can find latest versions in:
+#   https://ftp.gnu.org/gnu/binutils/
+#   https://ftp.gnu.org/gnu/gdb/
+ENV BINUTILS_VERSION=2.36.1 \
+    GDB_VERSION=10.2
 COPY scripts/ scripts/
 RUN set -ex \
     && deps=' \
@@ -28,8 +33,8 @@ RUN set -ex \
         libncurses-dev \
     ' \
     && apt-get update && apt-get install -y $deps --no-install-recommends && rm -rf /var/lib/apt/lists/* \
-    && scripts/fetch.sh http://ftp.gnu.org/gnu/binutils/binutils-2.25.1.tar.bz2 binutils-src \
-    && scripts/fetch.sh http://ftp.gnu.org/gnu/gdb/gdb-7.9.1.tar.xz gdb-src \
+    && scripts/fetch.sh http://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VERSION}.tar.bz2 binutils-src \
+    && scripts/fetch.sh http://ftp.gnu.org/gnu/gdb/gdb-${GDB_VERSION}.tar.xz gdb-src \
     && scripts/binutils.sh \
         aarch64-elf   \
         arc-elf       \
