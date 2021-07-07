@@ -33,6 +33,7 @@ COPY scripts/gdb.sh .
 #   https://github.com/bminor/binutils-gdb/blob/master/ld/configure.tgt
 # - gdb-sim:
 #   https://github.com/bminor/binutils-gdb/tree/master/sim
+# TODO: sh64-elf was removed in recent versions. Use old version to build it.
 
 # Parallel build that starts from builder
 
@@ -77,7 +78,7 @@ RUN ./binutils.sh powerpc-elf
 RUN ./binutils.sh powerpc64-elf
 RUN ./binutils.sh s390-elf
 RUN ./binutils.sh sh-elf
-RUN ./binutils.sh sh64-elf
+#RUN ./binutils.sh sh64-elf
 RUN ./binutils.sh sparc-elf
 
 # Binutils V-Z
@@ -104,20 +105,20 @@ FROM builder AS gdb2
 RUN ./gdb.sh m32c-elf
 RUN ./gdb.sh m32r-elf
 RUN ./gdb.sh mcore-elf
-RUN ./gdb.sh microblaze-elf
 RUN ./gdb.sh mips-elf
 RUN ./gdb.sh mips16-elf
 RUN ./gdb.sh mips64-elf
 RUN ./gdb.sh mn10300-elf
 RUN ./gdb.sh msp430-elf
+RUN ./gdb.sh m6811-elf
+RUN ./gdb.sh m68k-elf
 
 # GDB P-V
 FROM builder AS gdb3
 RUN ./gdb.sh powerpc-elf
 RUN ./gdb.sh powerpc64-elf
 RUN ./gdb.sh sh-elf
-RUN ./gdb.sh sh64-elf
-RUN ./gdb.sh sparc-elf
+#RUN ./gdb.sh sh64-elf
 RUN ./gdb.sh v850-elf
 
 # Copy the build outputs to clean image
@@ -137,16 +138,4 @@ COPY --from=gdb2      /usr/local/cross/ /usr/local/cross/
 COPY --from=gdb3      /usr/local/cross/ /usr/local/cross/
 RUN mkdir -p /work
 WORKDIR /work
-#
-## For mcore-elf, make only gdb-sim because full gdb build breaks.
-##    && scripts/mcore.sh \
-##    && apt-get purge -y --auto-remove $deps \
-##    && rm -rf binutils-src gdb-src
-#
-## Copy tools
-#COPY tools/bashrc /root/.bashrc
-#COPY tools/ $PREFIX/tools/
-#
-## Setup shared directory
-#VOLUME /opt
-#CMD cd /opt && /bin/bash
+ENV PATH="$PATH:/usr/local/cross/bin"

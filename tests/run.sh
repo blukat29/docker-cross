@@ -21,7 +21,7 @@ check_objdump() {
 }
 
 echo "== binutils test =="
-check_objdump obj/alpha-elf.x
+check_objdump obj/alpha-elf.x     alpha-linux
 check_objdump obj/arc-elf.x
 check_objdump obj/arm16-elf.x     arm-elf
 check_objdump obj/arm-elf.x
