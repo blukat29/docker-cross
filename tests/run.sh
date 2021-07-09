@@ -6,6 +6,9 @@ fail() {
 pass() {
     echo -n "\033[0;32mpass\033[0m "
 }
+skip() {
+    echo -n "\033[0;33mskip\033[0m "
+}
 
 check_objdump() {
     bin="$1"
@@ -58,7 +61,11 @@ check_gdb() {
     bin="$1"
     target=$(basename "$bin" | cut -d . -f 1)
 
-    if [ "$2" != "" ]; then
+    if [ "$2" = "skip" ]; then
+        skip
+        echo "$bin"
+        return
+    elif [ "$2" != "" ]; then
         sim="$2-run"
     else
         sim="$target-run"
@@ -87,8 +94,9 @@ check_gdb exe/mips16-elf.x
 check_gdb exe/mips-elf.x
 check_gdb exe/mn10300-elf.x
 # powerpc-elf-run hangs with this example.
-#check_gdb exe/powerpc-elf.x
+check_gdb exe/powerpc-elf.x skip
 check_gdb exe/sh64-elf.x
 check_gdb exe/sh-elf.x
-check_gdb exe/sparc-elf.x
+# sparc-elf-run does not work
+check_gdb exe/sparc-elf.x   skip
 check_gdb exe/v850-elf.x

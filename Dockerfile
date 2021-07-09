@@ -125,6 +125,7 @@ RUN ./gdb.sh powerpc-elf
 RUN ./gdb.sh powerpc64-elf
 RUN ./gdb.sh sh-elf
 RUN ./gdb.sh sh64-elf
+RUN ./gdb.sh sparc-elf
 RUN ./gdb.sh v850-elf
 
 # Copy the build outputs to clean image
@@ -132,7 +133,11 @@ RUN ./gdb.sh v850-elf
 FROM debian:jessie
 # Utilities
 RUN apt-get update && apt-get install -y \
-    wget curl unzip bzip2 file vim python python3
+    wget curl unzip bzip2 file vim python python3 libtinfo5
+# For some reason, libtinfo6 is not installable via apt
+RUN wget -O libtinfo6.deb http://ftp.kr.debian.org/debian/pool/main/n/ncurses/libtinfo6_6.1+20181013-2+deb10u2_amd64.deb \
+    && dpkg -i libtinfo6.deb \
+    && rm libtinfo6.deb
 # Copy outputs
 COPY --from=binutils1 /usr/local/cross/ /usr/local/cross/
 COPY --from=binutils2 /usr/local/cross/ /usr/local/cross/
