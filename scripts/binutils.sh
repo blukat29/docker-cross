@@ -7,6 +7,7 @@ setup() {
     ../binutils-src/configure \
         --target=$1 \
         --prefix=$PREFIX \
+        --enable-obsolete \
         --disable-nls \
         --disable-werror
     make -j

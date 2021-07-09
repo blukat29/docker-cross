@@ -8,6 +8,7 @@ setup() {
     ../gdb-src/configure \
         --target=$1 \
         --prefix=$PREFIX \
+        --enable-obsolete \
         --disable-nls \
         --enable-sim
     make -j

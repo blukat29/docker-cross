@@ -14,8 +14,11 @@ RUN mkdir -p $PREFIX
 # You can find latest versions in:
 #   https://ftp.gnu.org/gnu/binutils/
 #   https://ftp.gnu.org/gnu/gdb/
-ENV BINUTILS_VERSION=2.36.1 \
-    GDB_VERSION=10.2
+# Note that several targets including sh64-elf are removed after these versions.
+#   https://github.com/bminor/binutils-gdb/compare/5a48b83f3f4...fc7aa874aad
+# If you choose later versions, you may have to remove obsolete targets.
+ENV BINUTILS_VERSION=2.29.1 \
+    GDB_VERSION=8.0.1
 COPY scripts/fetch.sh .
 RUN ./fetch.sh \
     http://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VERSION}.tar.bz2 \
@@ -33,7 +36,6 @@ COPY scripts/gdb.sh .
 #   https://github.com/bminor/binutils-gdb/blob/master/ld/configure.tgt
 # - gdb-sim:
 #   https://github.com/bminor/binutils-gdb/tree/master/sim
-# TODO: sh64-elf was removed in recent versions. Use old version to build it.
 
 # Parallel build that starts from builder
 
@@ -69,6 +71,7 @@ RUN ./binutils.sh microblaze-elf
 RUN ./binutils.sh mips-elf
 RUN ./binutils.sh mips16-elf
 RUN ./binutils.sh mips64-elf
+RUN ./binutils.sh mmix-elf
 RUN ./binutils.sh mn10300-elf
 RUN ./binutils.sh msp430-elf
 
@@ -78,7 +81,7 @@ RUN ./binutils.sh powerpc-elf
 RUN ./binutils.sh powerpc64-elf
 RUN ./binutils.sh s390-elf
 RUN ./binutils.sh sh-elf
-#RUN ./binutils.sh sh64-elf
+RUN ./binutils.sh sh64-elf
 RUN ./binutils.sh sparc-elf
 
 # Binutils V-Z
@@ -104,21 +107,21 @@ RUN ./gdb.sh h8300-elf
 FROM builder AS gdb2
 RUN ./gdb.sh m32c-elf
 RUN ./gdb.sh m32r-elf
+RUN ./gdb.sh m6811-elf
+RUN ./gdb.sh m68k-elf
 RUN ./gdb.sh mcore-elf
 RUN ./gdb.sh mips-elf
 RUN ./gdb.sh mips16-elf
 RUN ./gdb.sh mips64-elf
 RUN ./gdb.sh mn10300-elf
 RUN ./gdb.sh msp430-elf
-RUN ./gdb.sh m6811-elf
-RUN ./gdb.sh m68k-elf
 
 # GDB P-V
 FROM builder AS gdb3
 RUN ./gdb.sh powerpc-elf
 RUN ./gdb.sh powerpc64-elf
 RUN ./gdb.sh sh-elf
-#RUN ./gdb.sh sh64-elf
+RUN ./gdb.sh sh64-elf
 RUN ./gdb.sh v850-elf
 
 # Copy the build outputs to clean image
