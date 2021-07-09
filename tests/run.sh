@@ -12,20 +12,26 @@ skip() {
 
 check_objdump() {
     bin="$1"
-    if [ "$2" != "" ]; then
-        target=$2
+    shift
+
+    if [ "$1" != "" ]; then
+        target=$1
+        shift
     else
         target=$(basename "$bin" | cut -d . -f 1)
     fi
+
+    extra_args="$@"
+
     dump="$target-objdump"
-    $dump -d $bin >/dev/null
+    $dump $extra_args -d $bin >/dev/null
     [ "$?" = "0" ] && pass || fail
     echo $bin
 }
 
 echo "== binutils test =="
 check_objdump obj/alpha-elf.x     alpha-linux
-check_objdump obj/arc-elf.x
+check_objdump obj/arc-elf.x       arc-elf      -m arc
 check_objdump obj/arm16-elf.x     arm-elf
 check_objdump obj/arm-elf.x
 check_objdump obj/avr8-elf.x      avr-elf
