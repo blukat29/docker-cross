@@ -98,7 +98,6 @@ RUN ./gdb.sh aarch64-elf
 RUN ./gdb.sh arm-elf
 RUN ./gdb.sh avr-elf
 RUN ./gdb.sh bfin-elf
-RUN ./gdb.sh cr16-elf
 RUN ./gdb.sh cris-elf
 RUN ./gdb.sh frv-elf
 RUN ./gdb.sh h8300-elf
@@ -109,12 +108,16 @@ RUN ./gdb.sh m32c-elf
 RUN ./gdb.sh m32r-elf
 RUN ./gdb.sh m6811-elf
 RUN ./gdb.sh m68k-elf
-RUN ./gdb.sh mcore-elf
 RUN ./gdb.sh mips-elf
 RUN ./gdb.sh mips16-elf
 RUN ./gdb.sh mips64-elf
 RUN ./gdb.sh mn10300-elf
 RUN ./gdb.sh msp430-elf
+# mcore must come last in a stage because
+# it creates files in the source directory.
+COPY scripts/mcore.sh .
+RUN apt-get install -y zlib1g-dev
+RUN ./mcore.sh
 
 # GDB P-V
 FROM builder AS gdb3
